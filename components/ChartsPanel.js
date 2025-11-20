@@ -1,5 +1,5 @@
-import React from 'react';
-import {
+// components/ChartsPanel.js
+const {
   ComposedChart,
   Line,
   XAxis,
@@ -9,11 +9,10 @@ import {
   Legend,
   ResponsiveContainer,
   Area
-} from 'recharts';
-import { TRANSLATIONS } from '../translations.js';
+} = Recharts;
 
-const ChartsPanel = ({ data, timeUnit, language }) => {
-  const t = TRANSLATIONS[language];
+window.ChartsPanel = ({ data, timeUnit, language }) => {
+  const t = window.TRANSLATIONS[language];
 
   // Format time for X-Axis based on unit
   const formatTime = (value) => {
@@ -130,5 +129,3 @@ const ChartsPanel = ({ data, timeUnit, language }) => {
     </div>
   );
 };
-
-export default ChartsPanel;

@@ -1,7 +1,4 @@
-import React from 'react';
-import { METRICS_WINDOW } from '../constants.js';
-import { TRANSLATIONS } from '../translations.js';
-
+// components/MetricsPanel.js
 const MetricDisplay = ({ label, value, description, color }) => (
     <div className={`relative flex-1 p-6 rounded-2xl bg-white border border-gray-200 shadow-lg overflow-hidden`}>
         <div className={`absolute top-0 left-0 h-1.5 w-full ${color}`}></div>
@@ -13,8 +10,8 @@ const MetricDisplay = ({ label, value, description, color }) => (
     </div>
 );
 
-const MetricsPanel = ({ metrics, timeUnit, language }) => {
-    const t = TRANSLATIONS[language];
+window.MetricsPanel = ({ metrics, timeUnit, language }) => {
+    const t = window.TRANSLATIONS[language];
     
     const getLabels = () => {
         switch (timeUnit) {
@@ -22,19 +19,19 @@ const MetricsPanel = ({ metrics, timeUnit, language }) => {
                 return {
                     thUnit: t.units.itemsMin,
                     ltUnit: t.units.minutes,
-                    window: `${METRICS_WINDOW}s`
+                    window: `${window.METRICS_WINDOW}s`
                 };
             case 'Minutes':
                 return {
                     thUnit: t.units.itemsHr,
                     ltUnit: t.units.hours,
-                    window: `${METRICS_WINDOW}m`
+                    window: `${window.METRICS_WINDOW}m`
                 };
             case 'Hours':
                 return {
                     thUnit: t.units.itemsDay,
                     ltUnit: t.units.days,
-                    window: `${METRICS_WINDOW}h`
+                    window: `${window.METRICS_WINDOW}h`
                 };
         }
     };
@@ -65,5 +62,3 @@ const MetricsPanel = ({ metrics, timeUnit, language }) => {
     </div>
   );
 };
-
-export default MetricsPanel;

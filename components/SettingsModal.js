@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { TRANSLATIONS } from '../translations.js';
+// components/SettingsModal.js
+const { useState } = React;
 
-const SettingsModal = ({ isOpen, onClose, timeUnit, setTimeUnit, language, setLanguage, onReset }) => {
+window.SettingsModal = ({ isOpen, onClose, timeUnit, setTimeUnit, language, setLanguage, onReset }) => {
     const [pendingUnit, setPendingUnit] = useState(null);
     
     if (!isOpen) return null;
 
-    const t = TRANSLATIONS[language];
+    const t = window.TRANSLATIONS[language];
 
     const handleUnitChange = (unit) => {
         if (unit === timeUnit) {
@@ -158,5 +158,3 @@ const SettingsModal = ({ isOpen, onClose, timeUnit, setTimeUnit, language, setLa
         </div>
     );
 };
-
-export default SettingsModal;

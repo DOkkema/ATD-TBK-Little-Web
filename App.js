@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
-import { useSimulation } from './hooks/useSimulation.js';
-import MetricsPanel from './components/MetricsPanel.js';
-import SimulationVisualizer from './components/SimulationVisualizer.js';
-import SettingsModal from './components/SettingsModal.js';
-import HelpModal from './components/HelpModal.js';
-import LittlesLawModal from './components/LittlesLawModal.js';
-import { TRANSLATIONS } from './translations.js';
-import { APP_VERSION } from './constants.js';
+// App.js
+const { useState } = React;
 
-function App() {
+window.App = () => {
   const [language, setLanguage] = useState('nl');
   // Pass language to hook so step names can be localized
-  const { steps, metrics, metricsHistory, machineStates, queueStates, updateStepParameter, reset, speedMultiplier, updateSpeedMultiplier, duplicateStepParameters, updateStepName, timeUnit, setTimeUnit, addStep, removeStep } = useSimulation(language);
+  const { steps, metrics, metricsHistory, machineStates, queueStates, updateStepParameter, reset, speedMultiplier, updateSpeedMultiplier, duplicateStepParameters, updateStepName, timeUnit, setTimeUnit, addStep, removeStep } = window.useSimulation(language);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isLittlesLawOpen, setIsLittlesLawOpen] = useState(false);
 
-  const t = TRANSLATIONS[language];
+  const t = window.TRANSLATIONS[language];
 
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center p-4 sm:p-6 lg:p-8">
@@ -31,7 +24,7 @@ function App() {
 
       <main className="w-full max-w-[95%] flex flex-col gap-8">
           <div className="flex flex-row gap-4 items-stretch">
-            <MetricsPanel metrics={metrics} timeUnit={timeUnit} language={language} />
+            <window.MetricsPanel metrics={metrics} timeUnit={timeUnit} language={language} />
             
             <div className="flex flex-row gap-2">
                 {/* Help Button */}
@@ -73,9 +66,9 @@ function App() {
             </div>
           </div>
           
-          <SimulationVisualizer 
+          <window.SimulationVisualizer 
             steps={steps} 
-            machineStates={machineStates}
+            machineStates={machineStates} 
             queueStates={queueStates}
             metricsHistory={metricsHistory}
             speedMultiplier={speedMultiplier}
@@ -90,7 +83,7 @@ function App() {
             onRemoveStep={removeStep}
           />
       </main>
-      <SettingsModal 
+      <window.SettingsModal 
         isOpen={isSettingsOpen} 
         onClose={() => setIsSettingsOpen(false)} 
         timeUnit={timeUnit}
@@ -99,22 +92,20 @@ function App() {
         setLanguage={setLanguage}
         onReset={reset}
       />
-      <HelpModal 
+      <window.HelpModal 
         isOpen={isHelpOpen} 
         onClose={() => setIsHelpOpen(false)} 
         language={language}
       />
-      <LittlesLawModal
+      <window.LittlesLawModal
         isOpen={isLittlesLawOpen}
         onClose={() => setIsLittlesLawOpen(false)}
         language={language}
       />
       <footer className="w-full max-w-[95%] text-center mt-8 text-gray-500 text-sm flex justify-center items-center gap-2">
         <p>{t.footer}</p>
-        <span className="bg-gray-100 px-2 py-0.5 rounded text-xs font-mono">v{APP_VERSION}</span>
+        <span className="bg-gray-100 px-2 py-0.5 rounded text-xs font-mono">v{window.APP_VERSION}</span>
       </footer>
     </div>
   );
-}
-
-export default App;
+};

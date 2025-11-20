@@ -6,31 +6,47 @@
     <title>Interactive Little's Law Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Load Babel Standalone -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 1. Load Libraries (React, DOM, Recharts) as Globals -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/recharts@2.12.3/umd/Recharts.js"></script>
     
-    <!-- Import Map -->
-    <script type="importmap">
+    <!-- 2. Load Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "react-dom": "https://esm.sh/react-dom@18.2.0",
-    "recharts": "https://esm.sh/recharts@2.12.3?external=react,react-dom",
-    "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "recharts": "https://aistudiocdn.com/recharts@^3.4.1"
   }
 }
 </script>
-  <link rel="stylesheet" href="/index.css">
+<link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-white text-gray-900 font-sans antialiased">
     <div id="root"></div>
     
-    <!-- Entry point. Points to index.js. data-presets="react" allows JSX. -->
-    <script type="text/babel" data-type="module" data-presets="react" src="./index.js"></script>
+    <!-- 3. Load Application Scripts in Dependency Order -->
+    <!-- No imports/exports allowed in these files. They attach to window object. -->
+    
+    <script type="text/babel" src="constants.js"></script>
+    <script type="text/babel" src="translations.js"></script>
+    <script type="text/babel" src="hooks/useSimulation.js"></script>
+    
+    <script type="text/babel" src="components/StepControl.js"></script>
+    <script type="text/babel" src="components/MetricsPanel.js"></script>
+    <script type="text/babel" src="components/ChartsPanel.js"></script>
+    <script type="text/babel" src="components/SettingsModal.js"></script>
+    <script type="text/babel" src="components/HelpModal.js"></script>
+    <script type="text/babel" src="components/LittlesLawModal.js"></script>
+    <script type="text/babel" src="components/SimulationVisualizer.js"></script>
+    
+    <script type="text/babel" src="App.js"></script>
+    <script type="text/babel" src="index.js"></script>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>

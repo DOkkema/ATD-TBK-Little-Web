@@ -1,7 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { INITIAL_STEPS, SIMULATION_SPEED, METRICS_WINDOW, MIN_STEPS, MAX_STEPS, STEP_COLORS, ProductIcon } from '../constants.js';
-import { TRANSLATIONS } from '../translations.js';
-import React from 'react';
+// hooks/useSimulation.js
+const { useState, useEffect, useCallback, useRef } = React;
 
 const initialMachineState = {
     status: 'idle',
@@ -13,17 +11,17 @@ const initialQueueState = {
     currentBatch: null,
 };
 
-export const useSimulation = (language) => {
-    const [steps, setSteps] = useState(INITIAL_STEPS);
+window.useSimulation = (language) => {
+    const [steps, setSteps] = useState(window.INITIAL_STEPS);
     const [speedMultiplier, setSpeedMultiplier] = useState(1);
     const [timeUnit, setTimeUnit] = useState('Seconds');
     
     // Initialize states based on initial steps
     const [machineStates, setMachineStates] = useState(
-        Array(INITIAL_STEPS.length).fill(0).map(() => ({ ...initialMachineState }))
+        Array(window.INITIAL_STEPS.length).fill(0).map(() => ({ ...initialMachineState }))
     );
     const [queueStates, setQueueStates] = useState(
-        Array(INITIAL_STEPS.length - 1).fill(0).map(() => ({ ...initialQueueState }))
+        Array(window.INITIAL_STEPS.length - 1).fill(0).map(() => ({ ...initialQueueState }))
     );
     
     const [totalTime, setTotalTime] = useState(0);
@@ -42,12 +40,11 @@ export const useSimulation = (language) => {
 
     // Auto-translate step names when language changes
     useEffect(() => {
-        const t = TRANSLATIONS[language];
+        const t = window.TRANSLATIONS[language];
         setSteps(currentSteps => currentSteps.map(step => {
             let newName = step.name;
             
             // Regex to find "Stap/Step X:" prefix
-            // Captures: 1=(Stap|Step), 2=Number, 3=Separator(:)
             const prefixRegex = /^(Stap|Step)\s+(\d+)(:?)/i;
             const match = step.name.match(prefixRegex);
             
@@ -77,10 +74,9 @@ export const useSimulation = (language) => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             // Total simulated time to advance in this tick
-            const totalSimTimeAdvance = (SIMULATION_SPEED / 1000) * speedMultiplier;
+            const totalSimTimeAdvance = (window.SIMULATION_SPEED / 1000) * speedMultiplier;
             
             // To ensure accuracy at high speeds (e.g. 128x), we sub-step the simulation.
-            // A max step of 0.1s ensures we don't skip over short cycle times.
             const MAX_STEP = 0.1;
             const iterations = Math.ceil(totalSimTimeAdvance / MAX_STEP);
             const dt = totalSimTimeAdvance / iterations;
@@ -201,7 +197,7 @@ export const useSimulation = (language) => {
             const currentTotalWip = currentWipInMachines + currentWipInQueues;
             
             // Update WIP History Ref (Rolling Window)
-            const cutoff = loopTime - METRICS_WINDOW;
+            const cutoff = loopTime - window.METRICS_WINDOW;
             wipHistoryRef.current.push({ t: loopTime, w: currentTotalWip });
             
             // Prune old data
@@ -215,7 +211,7 @@ export const useSimulation = (language) => {
             // Metrics Calculation (Same as before)
             const currentWipHistory = wipHistoryRef.current;
             const currentCompletedBatches = completedBatchesRef.current;
-            const windowDuration = Math.min(loopTime, METRICS_WINDOW);
+            const windowDuration = Math.min(loopTime, window.METRICS_WINDOW);
             
             // Avg WIP
             const avgWip = currentWipHistory.length > 0 
@@ -224,8 +220,8 @@ export const useSimulation = (language) => {
 
             const conversionFactor = timeUnit === 'Hours' ? 24 : 60;
             const totalItemsCompleted = currentCompletedBatches.reduce((sum, batch) => sum + batch.size, 0);
-            const windowDurationConverted = METRICS_WINDOW / conversionFactor; 
-            const effectiveDurationConverted = loopTime < METRICS_WINDOW ? loopTime / conversionFactor : windowDurationConverted;
+            const windowDurationConverted = window.METRICS_WINDOW / conversionFactor; 
+            const effectiveDurationConverted = loopTime < window.METRICS_WINDOW ? loopTime / conversionFactor : windowDurationConverted;
             
             const throughput = effectiveDurationConverted > 0 ? totalItemsCompleted / effectiveDurationConverted : 0;
             
@@ -251,7 +247,7 @@ export const useSimulation = (language) => {
                 });
             }
 
-        }, SIMULATION_SPEED);
+        }, window.SIMULATION_SPEED);
 
         return () => clearInterval(intervalId);
     }, [steps, speedMultiplier, machineStates, queueStates, totalTime, nextBatchId, timeUnit]);
@@ -268,10 +264,10 @@ export const useSimulation = (language) => {
     }, []);
 
     const reset = useCallback(() => {
-        setSteps(INITIAL_STEPS);
+        setSteps(window.INITIAL_STEPS);
         setSpeedMultiplier(1);
-        setMachineStates(Array(INITIAL_STEPS.length).fill(0).map(() => ({ ...initialMachineState })));
-        setQueueStates(Array(INITIAL_STEPS.length - 1).fill(0).map(() => ({ ...initialQueueState })));
+        setMachineStates(Array(window.INITIAL_STEPS.length).fill(0).map(() => ({ ...initialMachineState })));
+        setQueueStates(Array(window.INITIAL_STEPS.length - 1).fill(0).map(() => ({ ...initialQueueState })));
         setTotalTime(0);
         wipHistoryRef.current = [];
         completedBatchesRef.current = [];
@@ -299,18 +295,18 @@ export const useSimulation = (language) => {
 
     const addStep = useCallback(() => {
         setSteps(currentSteps => {
-            if (currentSteps.length >= MAX_STEPS) return currentSteps;
+            if (currentSteps.length >= window.MAX_STEPS) return currentSteps;
             
-            const t = TRANSLATIONS[language];
+            const t = window.TRANSLATIONS[language];
             const lastStep = currentSteps[currentSteps.length - 1];
             const newId = currentSteps.length + 1;
-            const color = STEP_COLORS[(newId - 1) % STEP_COLORS.length];
+            const color = window.STEP_COLORS[(newId - 1) % window.STEP_COLORS.length];
             
             const newStep = {
                 id: newId,
                 name: `${t.stepPrefix} ${newId}: ...`,
                 color: color,
-                icon: React.createElement(ProductIcon),
+                icon: React.createElement(window.ProductIcon),
                 cycleTime: lastStep.cycleTime,
                 batchSize: lastStep.batchSize,
                 setupTime: lastStep.setupTime
@@ -325,15 +321,15 @@ export const useSimulation = (language) => {
 
     const removeStep = useCallback(() => {
         setSteps(currentSteps => {
-            if (currentSteps.length <= MIN_STEPS) return currentSteps;
+            if (currentSteps.length <= window.MIN_STEPS) return currentSteps;
             return currentSteps.slice(0, -1);
         });
         setMachineStates(prev => {
-            if (prev.length <= MIN_STEPS - 1) return prev;
+            if (prev.length <= window.MIN_STEPS - 1) return prev;
             return prev.slice(0, -1);
         });
         setQueueStates(prev => {
-            if (prev.length <= MIN_STEPS - 1) return prev;
+            if (prev.length <= window.MIN_STEPS - 1) return prev;
             return prev.slice(0, -1);
         });
     }, []);

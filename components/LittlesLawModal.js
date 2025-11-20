@@ -1,10 +1,8 @@
-import React from 'react';
-import { TRANSLATIONS } from '../translations.js';
-
-const LittlesLawModal = ({ isOpen, onClose, language }) => {
+// components/LittlesLawModal.js
+window.LittlesLawModal = ({ isOpen, onClose, language }) => {
     if (!isOpen) return null;
 
-    const t = TRANSLATIONS[language];
+    const t = window.TRANSLATIONS[language];
     const ll = t.littlesLaw;
 
     return (
@@ -117,5 +115,3 @@ const LittlesLawModal = ({ isOpen, onClose, language }) => {
         </div>
     );
 };
-
-export default LittlesLawModal;

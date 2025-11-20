@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-import StepControl from './StepControl.js';
-import ChartsPanel from './ChartsPanel.js';
-import { TRANSLATIONS } from '../translations.js';
-import { MIN_STEPS, MAX_STEPS } from '../constants.js';
+// components/SimulationVisualizer.js
+const { useState, cloneElement, Fragment, useRef, useEffect } = React;
 
 // Palette Mapping:
 // Idle: Gray (Neutral)
@@ -25,25 +22,25 @@ const getStepTextColor = (stepColor) => {
 
 const Item = ({step, isGhost}) => (
     <div title="Product Item" className={`flex-shrink-0 w-4 h-4 rounded ${isGhost ? 'opacity-30' : ''} ${getStepTextColor(step.color)} bg-gray-100 border border-current`}>
-       {React.cloneElement(step.icon, {className: `w-full h-full p-0.5`})}
+       {cloneElement(step.icon, {className: `w-full h-full p-0.5`})}
     </div>
 );
 
 const MachineDisplay = ({ step, state, onNameChange, t }) => {
     const config = getStatusConfig(t)[state.status];
     const batch = state.currentBatch;
-    const [isEditing, setIsEditing] = React.useState(false);
-    const [editableName, setEditableName] = React.useState(step.name);
-    const inputRef = React.useRef(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editableName, setEditableName] = useState(step.name);
+    const inputRef = useRef(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isEditing && inputRef.current) {
             inputRef.current.focus();
             inputRef.current.select();
         }
     }, [isEditing]);
     
-    React.useEffect(() => {
+    useEffect(() => {
         if(!isEditing) {
             setEditableName(step.name);
         }
@@ -95,7 +92,7 @@ const MachineDisplay = ({ step, state, onNameChange, t }) => {
             </div>
             <div className={`w-16 h-16 flex items-center justify-center rounded-full border-4 ${state.status === 'idle' ? 'border-gray-200 bg-white' : `${config.color} text-white`} transition-colors shadow-sm`}>
                 <div className={`${state.status !== 'idle' && state.status !== 'blocked' ? 'animate-pulse' : ''} ${state.status === 'idle' ? getStepTextColor(step.color) : 'text-white'}`}>
-                    {React.cloneElement(step.icon, {className: "w-8 h-8"})}
+                    {cloneElement(step.icon, {className: "w-8 h-8"})}
                 </div>
             </div>
             <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${state.status === 'idle' ? 'bg-white border-gray-200 text-gray-500' : `${config.color} text-white`}`}>
@@ -129,7 +126,7 @@ const QueueDisplay = ({step, state}) => {
 };
 
 
-const SimulationVisualizer = ({ 
+window.SimulationVisualizer = ({ 
     steps, 
     machineStates, 
     queueStates, 
@@ -147,7 +144,7 @@ const SimulationVisualizer = ({
 }) => {
     const [activeTab, setActiveTab] = useState('simulation');
     const [showResetConfirm, setShowResetConfirm] = useState(false);
-    const t = TRANSLATIONS[language];
+    const t = window.TRANSLATIONS[language];
 
     const speedMapping = [0.5, 1, 2, 4, 8, 16, 32, 64, 128];
     const currentSpeedIndex = speedMapping.indexOf(speedMultiplier);
@@ -192,7 +189,7 @@ const SimulationVisualizer = ({
                         <div className="flex items-center gap-1 bg-gray-50 p-1 rounded-lg border border-gray-200 ml-2">
                              <button 
                                 onClick={onRemoveStep} 
-                                disabled={steps.length <= MIN_STEPS}
+                                disabled={steps.length <= window.MIN_STEPS}
                                 className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed text-gray-600 font-bold text-xl leading-none transition-colors"
                                 title={t.controls.removeStep}
                              >
@@ -203,7 +200,7 @@ const SimulationVisualizer = ({
                              </span>
                              <button 
                                 onClick={onAddStep} 
-                                disabled={steps.length >= MAX_STEPS}
+                                disabled={steps.length >= window.MAX_STEPS}
                                 className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed text-[#001489] font-bold text-xl leading-none transition-colors"
                                 title={t.controls.addStep}
                              >
@@ -244,7 +241,7 @@ const SimulationVisualizer = ({
             {activeTab === 'simulation' ? (
                 <div className="flex items-start justify-center gap-2 overflow-x-auto pt-4 pb-4 -mx-6 px-6">
                     {steps.map((step, index) => (
-                        <React.Fragment key={step.id}>
+                        <Fragment key={step.id}>
                             <div className="flex flex-col gap-2 w-40 flex-shrink-0">
                                 <MachineDisplay 
                                     step={step} 
@@ -252,7 +249,7 @@ const SimulationVisualizer = ({
                                     onNameChange={(newName) => onStepNameChange(index, newName)}
                                     t={t}
                                 />
-                                <StepControl
+                                <window.StepControl
                                     step={step}
                                     onParameterChange={(param, value) => onParameterChange(index, param, value)}
                                     onDuplicate={() => onDuplicate(index)}
@@ -263,12 +260,12 @@ const SimulationVisualizer = ({
                             {index < steps.length - 1 && (
                                 <QueueDisplay step={step} state={queueStates[index] || { currentBatch: null }} />
                             )}
-                        </React.Fragment>
+                        </Fragment>
                     ))}
                 </div>
             ) : (
                 <div className="py-4">
-                    <ChartsPanel data={metricsHistory} timeUnit={timeUnit} language={language} />
+                    <window.ChartsPanel data={metricsHistory} timeUnit={timeUnit} language={language} />
                 </div>
             )}
 
@@ -305,5 +302,3 @@ const SimulationVisualizer = ({
         </div>
     );
 };
-
-export default SimulationVisualizer;

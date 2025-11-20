@@ -1,6 +1,4 @@
-import React from 'react';
-import { TRANSLATIONS } from '../translations.js';
-
+// components/StepControl.js
 const SliderInput = ({label, value, min, max, step, unit, onChange}) => (
     <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center text-sm">
@@ -22,8 +20,8 @@ const SliderInput = ({label, value, min, max, step, unit, onChange}) => (
 );
 
 
-const StepControl = ({ step, onParameterChange, onDuplicate, timeUnit, language = 'nl' }) => {
-  const t = TRANSLATIONS[language];
+window.StepControl = ({ step, onParameterChange, onDuplicate, timeUnit, language = 'nl' }) => {
+  const t = window.TRANSLATIONS[language];
   
   const getUnitLabel = (type) => {
       switch (timeUnit) {
@@ -79,5 +77,3 @@ const StepControl = ({ step, onParameterChange, onDuplicate, timeUnit, language 
     </div>
   );
 };
-
-export default StepControl;

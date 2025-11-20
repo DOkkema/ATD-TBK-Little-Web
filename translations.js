@@ -1,4 +1,5 @@
-export const TRANSLATIONS = {
+// translations.js
+window.TRANSLATIONS = {
   en: {
     appTitle: "Interactive Production Line Simulator",
     appSubtitle: "Observe Little's Law: L = λW (Avg. WIP = Throughput × Avg. Lead Time)",

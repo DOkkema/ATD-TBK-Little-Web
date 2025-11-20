@@ -1,10 +1,8 @@
-import React from 'react';
-import { TRANSLATIONS } from '../translations.js';
-
-const HelpModal = ({ isOpen, onClose, language }) => {
+// components/HelpModal.js
+window.HelpModal = ({ isOpen, onClose, language }) => {
     if (!isOpen) return null;
 
-    const t = TRANSLATIONS[language];
+    const t = window.TRANSLATIONS[language];
 
     // Mini UI components for visual explanation
     const MockStatus = ({ color, label }) => (
@@ -152,5 +150,3 @@ const HelpModal = ({ isOpen, onClose, language }) => {
         </div>
     );
 };
-
-export default HelpModal;
