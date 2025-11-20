@@ -1,6 +1,4 @@
 import React from 'react';
-// FIX: Replaced non-existent type `ProductParameters` with `StepParameters` to resolve the import error.
-import type { StepParameters } from '../types.js';
 
 const SliderInput = ({label, value, min, max, step, unit, onChange}) => (
     <div className="flex flex-col gap-2">

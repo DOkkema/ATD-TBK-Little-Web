@@ -1,5 +1,4 @@
 import React from 'react';
-import type { StepParameters, TimeUnit, Language } from '../types.js';
 import { TRANSLATIONS } from '../translations.js';
 
 const SliderInput = ({label, value, min, max, step, unit, onChange}) => (

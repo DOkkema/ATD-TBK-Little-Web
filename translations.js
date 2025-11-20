@@ -1,5 +1,3 @@
-import type { Language } from './types.js';
-
 export const TRANSLATIONS = {
   en: {
     appTitle: "Interactive Production Line Simulator",
@@ -125,7 +123,7 @@ export const TRANSLATIONS = {
         lSubtitle: "Work In Progress",
         lDesc: "The total inventory currently in the system. This includes raw materials, parts in machines, and items waiting in queues.",
         
-        thTitle: "λ (Throughput)",
+        thTitle: "λ (Output)",
         thSubtitle: "Production Rate",
         thDesc: "The average number of finished products leaving the factory per unit of time (e.g., items per hour).",
         
@@ -140,10 +138,10 @@ export const TRANSLATIONS = {
 
     stepPrefix: "Step",
     stepNameMapping: {
-        "Zagen": "Sawing",
-        "Buigen": "Bending",
-        "Lassen": "Welding",
-        "Assembleren": "Assembly"
+        "Sawing": "Zagen",
+        "Bending": "Buigen",
+        "Welding": "Lassen",
+        "Assembly": "Assembleren"
     }
   },
   nl: {

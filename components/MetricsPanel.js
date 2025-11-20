@@ -1,5 +1,4 @@
 import React from 'react';
-import type { SimulationMetrics, TimeUnit, Language } from '../types.js';
 import { METRICS_WINDOW } from '../constants.js';
 import { TRANSLATIONS } from '../translations.js';
 

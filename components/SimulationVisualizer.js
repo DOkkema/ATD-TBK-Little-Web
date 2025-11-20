@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import type { StepParameters, MachineState, QueueState, MachineStatus, MetricsHistoryEntry, TimeUnit, Language } from '../types.js';
 import StepControl from './StepControl.js';
 import ChartsPanel from './ChartsPanel.js';
 import { TRANSLATIONS } from '../translations.js';

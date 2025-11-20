@@ -10,7 +10,6 @@ import {
   ResponsiveContainer,
   Area
 } from 'recharts';
-import type { MetricsHistoryEntry, TimeUnit, Language } from '../types.js';
 import { TRANSLATIONS } from '../translations.js';
 
 const ChartsPanel = ({ data, timeUnit, language }) => {

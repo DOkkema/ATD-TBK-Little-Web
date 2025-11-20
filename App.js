@@ -6,7 +6,6 @@ import SettingsModal from './components/SettingsModal.js';
 import HelpModal from './components/HelpModal.js';
 import LittlesLawModal from './components/LittlesLawModal.js';
 import { TRANSLATIONS } from './translations.js';
-import type { Language } from './types.js';
 import { APP_VERSION } from './constants.js';
 
 function App() {

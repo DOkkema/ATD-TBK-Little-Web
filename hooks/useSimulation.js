@@ -1,6 +1,5 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import type { StepParameters, SimulationMetrics, MachineState, QueueState, Batch, MetricsHistoryEntry, TimeUnit, Language } from '../types.js';
-import { INITIAL_STEPS, SIMULATION_SPEED, QUEUE_CAPACITY, METRICS_WINDOW, MIN_STEPS, MAX_STEPS, STEP_COLORS, ProductIcon } from '../constants.js';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { INITIAL_STEPS, SIMULATION_SPEED, METRICS_WINDOW, MIN_STEPS, MAX_STEPS, STEP_COLORS, ProductIcon } from '../constants.js';
 import { TRANSLATIONS } from '../translations.js';
 import React from 'react';
 
@@ -352,7 +351,7 @@ export const useSimulation = (language) => {
         duplicateStepParameters, 
         updateStepName, 
         timeUnit,
-        setTimeUnit,
+        setTimeUnit, 
         addStep,
         removeStep
     };

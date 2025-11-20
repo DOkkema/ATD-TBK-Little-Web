@@ -1,5 +1,4 @@
 import React from 'react';
-import type { Language } from '../types.js';
 import { TRANSLATIONS } from '../translations.js';
 
 const LittlesLawModal = ({ isOpen, onClose, language }) => {

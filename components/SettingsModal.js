@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import type { TimeUnit, Language } from '../types.js';
 import { TRANSLATIONS } from '../translations.js';
 
 const SettingsModal = ({ isOpen, onClose, timeUnit, setTimeUnit, language, setLanguage, onReset }) => {
@@ -97,7 +96,7 @@ const SettingsModal = ({ isOpen, onClose, timeUnit, setTimeUnit, language, setLa
                             {t.settingsModal.timeUnitDesc}
                         </p>
                         <div className="flex flex-col space-y-2">
-                            {(['Seconds', 'Minutes', 'Hours']).map((unit) => (
+                            {['Seconds', 'Minutes', 'Hours'].map((unit) => (
                                 <label key={unit} className="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
                                     <input
                                         type="radio"

@@ -1,5 +1,4 @@
 import React from 'react';
-import type { StepParameters, TimeUnit, Language } from '../types.js';
 import StepControl from './StepControl.js';
 
 const ControlsPanel = ({ steps, onParameterChange, onReset, onDuplicate, timeUnit, language }) => {

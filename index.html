@@ -6,10 +6,10 @@
     <title>Interactive Little's Law Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Load Babel Standalone to compile JSX/TS in the browser -->
+    <!-- Load Babel Standalone -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <!-- Import Map: Explicitly map React 18 and Recharts -->
+    <!-- Import Map -->
     <script type="importmap">
 {
   "imports": {
@@ -17,9 +17,9 @@
     "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
     "react-dom": "https://esm.sh/react-dom@18.2.0",
     "recharts": "https://esm.sh/recharts@2.12.3?external=react,react-dom",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "vite": "https://aistudiocdn.com/vite@^7.2.4",
     "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/"
   }
 }
@@ -29,8 +29,8 @@
   <body class="bg-white text-gray-900 font-sans antialiased">
     <div id="root"></div>
     
-    <!-- Entry point. Must be .js for GitHub Pages to serve correct MIME type -->
-    <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.js"></script>
+    <!-- Entry point. Points to index.js. data-presets="react" allows JSX. -->
+    <script type="text/babel" data-type="module" data-presets="react" src="./index.js"></script>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>
