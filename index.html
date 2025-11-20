@@ -6,33 +6,39 @@
     <title>Interactive Little's Law Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 1. Load Libraries (React, DOM, Recharts) as Globals -->
+    <!-- 1. Load Libraries (React, DOM, Prop-Types, Recharts) as Globals -->
+    <!-- React Core -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Prop-Types (REQUIRED for Recharts UMD) -->
+    <script src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+    
+    <!-- Recharts -->
     <script crossorigin src="https://unpkg.com/recharts@2.12.3/umd/Recharts.js"></script>
     
-    <!-- 2. Load Babel -->
+    <!-- 2. Load Babel (Translates JSX to JS in the browser) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "recharts": "https://aistudiocdn.com/recharts@^3.4.1"
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-white text-gray-900 font-sans antialiased">
     <div id="root"></div>
     
     <!-- 3. Load Application Scripts in Dependency Order -->
-    <!-- No imports/exports allowed in these files. They attach to window object. -->
+    <!-- Note: We use type="text/babel" so Babel can compile the JSX -->
     
+    <script type="text/babel" src="types.js"></script>
     <script type="text/babel" src="constants.js"></script>
     <script type="text/babel" src="translations.js"></script>
     <script type="text/babel" src="hooks/useSimulation.js"></script>
@@ -43,10 +49,11 @@
     <script type="text/babel" src="components/SettingsModal.js"></script>
     <script type="text/babel" src="components/HelpModal.js"></script>
     <script type="text/babel" src="components/LittlesLawModal.js"></script>
+    <script type="text/babel" src="components/ControlsPanel.js"></script>
+    <script type="text/babel" src="components/ProductControl.js"></script>
     <script type="text/babel" src="components/SimulationVisualizer.js"></script>
     
     <script type="text/babel" src="App.js"></script>
     <script type="text/babel" src="index.js"></script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+  </body>
 </html>
