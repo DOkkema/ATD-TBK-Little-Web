@@ -1,59 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Interactive Little's Law Simulator</title>
+    
+    <!-- 1. CDN Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     
-    <!-- 1. Load Libraries (React, DOM, Prop-Types, Recharts) as Globals -->
-    <!-- React Core -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- FIX: Switched to Chart.js because Recharts does not support CDN/UMD usage well with React 18 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Prop-Types (REQUIRED for Recharts UMD) -->
-    <script src="https://unpkg.com/prop-types/prop-types.min.js"></script>
-    
-    <!-- Recharts -->
-    <script crossorigin src="https://unpkg.com/recharts@2.12.3/umd/Recharts.js"></script>
-    
-    <!-- 2. Load Babel (Translates JSX to JS in the browser) -->
+    <!-- Babel for JSX compilation in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'fade-in': 'fadeIn 0.2s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
 <script type="importmap">
 {
   "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "recharts": "https://aistudiocdn.com/recharts@^3.4.1"
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "vite": "https://aistudiocdn.com/vite@^7.2.7",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
   }
 }
 </script>
 </head>
-  <body class="bg-white text-gray-900 font-sans antialiased">
+<body class="bg-white text-gray-900 font-sans antialiased">
     <div id="root"></div>
+
+    <!-- 2. Application Scripts (Order is critical) -->
     
-    <!-- 3. Load Application Scripts in Dependency Order -->
-    <!-- Note: We use type="text/babel" so Babel can compile the JSX -->
+    <!-- Constants & Utilities (No dependencies on other app files) -->
+    <script type="text/babel" src="./translations.js"></script>
+    <script type="text/babel" src="./constants.js"></script>
+    <script type="text/babel" src="./utils.js"></script>
     
-    <script type="text/babel" src="types.js"></script>
-    <script type="text/babel" src="constants.js"></script>
-    <script type="text/babel" src="translations.js"></script>
-    <script type="text/babel" src="hooks/useSimulation.js"></script>
+    <!-- Hooks (Depends on constants/utils) -->
+    <script type="text/babel" src="./hooks.js"></script>
     
-    <script type="text/babel" src="components/StepControl.js"></script>
-    <script type="text/babel" src="components/MetricsPanel.js"></script>
-    <script type="text/babel" src="components/ChartsPanel.js"></script>
-    <script type="text/babel" src="components/SettingsModal.js"></script>
-    <script type="text/babel" src="components/HelpModal.js"></script>
-    <script type="text/babel" src="components/LittlesLawModal.js"></script>
-    <script type="text/babel" src="components/ControlsPanel.js"></script>
-    <script type="text/babel" src="components/ProductControl.js"></script>
-    <script type="text/babel" src="components/SimulationVisualizer.js"></script>
+    <!-- Child Components (Leaf nodes first) -->
+    <script type="text/babel" src="./components/MetricsPanel.js"></script>
+    <script type="text/babel" src="./components/StepControl.js"></script>
+    <script type="text/babel" src="./components/ChartsPanel.js"></script>
     
-    <script type="text/babel" src="App.js"></script>
-    <script type="text/babel" src="index.js"></script>
-  </body>
+    <!-- Complex Components (Depends on children) -->
+    <script type="text/babel" src="./components/SimulationVisualizer.js"></script>
+    <script type="text/babel" src="./components/SettingsModal.js"></script>
+    <script type="text/babel" src="./components/HelpModal.js"></script>
+    <script type="text/babel" src="./components/LittlesLawModal.js"></script>
+    
+    <!-- Main App -->
+    <script type="text/babel" src="./App.js"></script>
+    
+    <!-- Entry Point -->
+    <script type="text/babel" src="./index.js"></script>
+</body>
 </html>
